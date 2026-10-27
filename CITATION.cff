@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use or build on this work, please cite it as below."
+title: "Unlicensed Substitution: Field Notes from Multi-LLM Research Practice"
+type: report
+authors:
+  - family-names: Castellanos
+    given-names: Joseph
+    affiliation: "University of Nevada, Las Vegas"
+date-released: 2026-10-26
+license: CC-BY-4.0
+repository-code: "https://github.com/Choytcudz/fluffy-disco"
+keywords:
+  - large language models
+  - evaluation
+  - multi-model verification
+  - framework-grounded analysis
+  - DisCrit
+abstract: >-
+  Proposes unlicensed substitution: when a language model meets material it
+  was not built around, it applies a default standard it already carries in
+  place of the standard the material calls for, and does not report the swap.
+  Seven cases from three multi-LLM research projects record what was
+  substituted, who caught it, and what corrected it.

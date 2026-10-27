@@ -1,0 +1,265 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\setlist{itemsep=2pt,topsep=4pt}
+
+\title{Unlicensed Substitution: Field Notes on How Language Models\\
+Replace the Standard Their Material Calls For}
+\author{Joseph Castellanos\\
+\small University of Nevada, Las Vegas}
+\date{October 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+When a language model meets material it was not built around, it does not
+ask how that material wants to be read. It applies a standard it already
+carries, and it reports the result as warranted. I call this
+\emph{unlicensed substitution}. This paper reports seven cases from three
+research projects that I designed and ran with several models: a critique
+of a manuscript grounded in Disability Critical Race Theory (DisCrit), a
+multi-model entry in the Kaggle ``Squares in Squares'' packing competition,
+and an origins-of-life simulation. In each case I record the standard the
+material called for, the default that replaced it, who caught the swap, and
+what corrected it. In this record, models caught one another's errors of
+fact and computation, while the human lead caught every error of frame. The
+model that detected others' errors committed four of the seven
+substitutions itself. In the one case tested in depth, explicit instruction
+in the framework's logic, given before critique, was sufficient to correct
+the misreading. The cases are selected, not sampled; I state the claims as
+propositions and close with four tests that could falsify them.
+\end{abstract}
+
+\section{Proposition}
+
+\emph{Unlicensed substitution} names a specific failure: a model replaces
+the standard its material calls for with a default standard, and nothing in
+the material licensed the swap. The working claim has three parts.
+
+\begin{enumerate}
+\item \textbf{Substitution occurs.} Models apply embedded standards, such as
+social-science methodology, numerical tolerance, confident completion, and
+softened or precautionary framing, where those standards do not fit.
+\item \textbf{The model does not see it.} The output is internally consistent
+and presented as warranted. The swap is not visible from inside the
+response.
+\item \textbf{Instruction can correct it.} Stating the framework's logic
+explicitly, before asking for critique, changed what the model could
+recognize as coherent in the one case tested in depth.
+\end{enumerate}
+
+Part 3 has been tested on one framework. Whether it holds across frameworks,
+and whether the correction persists, is unknown.
+
+The proposition grew out of an earlier observation: LLM critique of
+theoretically novel scholarship defaulted to the analytical apparatus the
+model carries rather than the framework's own logic (Case~1). The cases
+below test whether the same structure appears outside framework critique.
+
+\section{Setting and method}
+
+All three projects were designed and run by the author, who coordinated
+several models through a single ``live thread'' where work was collected,
+cross-checked, and decided. Other models received round prompts and
+returned reports. Two standards applied throughout: every number must come
+with a source or the code that reproduces it, and each report must separate
+what was verified, what a source states, and what is assumed.
+
+For adversarial review, I used a \emph{failure finder} role: the model
+starts from the assumption that every attached file and claim is wrong,
+succeeds only by producing a reproducible failure, and lists anything it
+could not break as surviving, with what it tried. Agreement does not count
+as a result. The full prompt is in the accompanying repository.
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabularx}{\linewidth}{@{}lXl@{}}
+\toprule
+Project & Task & Models \\
+\midrule
+Framework critique & Critique of a co-authored manuscript grounded in
+DisCrit~\cite{annamma2013} and Chicana feminist epistemology & Claude; two
+others in later checks \\
+Squares in Squares & Pack $n$ unit squares into the smallest square,
+$n=1,\dots,1000$~\cite{kaggle,friedman} & Claude, Grok, Gemini \\
+Origins of life & Agent-based and reaction-network models of prebiotic
+chemistry & Claude \\
+\bottomrule
+\end{tabularx}
+\caption{Projects from which the cases are drawn.}
+\end{table}
+
+\section{Cases}
+
+\paragraph{Case 1: Mechanism-hunting in a framework that presupposes its
+conditions.}
+DisCrit treats racism and ableism as foundational conditions; analysis
+attends to how people navigate and resist within a structure already
+presupposed as against them~\cite{annamma2013}. The model instead searched
+for racism as an isolable mechanism, found no discrete variable, and
+diagnosed that absence as a coherence problem in the manuscript. The author
+caught the substitution. Explicit instruction (\emph{these are presupposed;
+do not look for them as mechanisms}) produced a full recalibration of the
+model's reading.
+
+\paragraph{Case 2: Tolerance standing in for validity.}
+The competition requires packings with no overlap; a competitor's
+repository reports that the official checker certifies non-overlap with
+interval arithmetic. One model's validator used a floating-point tolerance
+of $10^{-8}$. Test inputs with overlaps of $5\times10^{-9}$ and $10^{-12}$,
+and a square $5\times10^{-9}$ outside the container, were all accepted. A
+second model caught this by constructing the failing inputs. The correction
+was a reference validator using 50-digit decimal arithmetic that computes
+the side length from the square positions and reports \textsc{valid},
+\textsc{contact}, or \textsc{invalid}.
+
+\paragraph{Case 3: ``Best found'' reported as ``proven.''}
+One model's table listed $n=11$, 17, and 19 as proven optimal. The
+Ellsworth catalogue~\cite{ellsworth} lists all three as unproven. A second
+model caught this by checking each row against the catalogue. The
+correction was a required proof-status column with a source for every row.
+
+\paragraph{Case 4: One square measured as the whole packing.}
+One model's optimization script computed the bounding box from a single
+square's width rather than the extent of the full packing. A second model
+caught this by reading the code. A replacement optimizer (random-start
+L-BFGS followed by SLSQP with separating-line variables) reached the known
+optima for $n=5$ and $n=10$ from random starts and came within 0.25\% of
+the record for $n=11$.
+
+\paragraph{Case 5: A reworded role that changed the role.}
+Asked to remove wording likely to trigger automatic refusal, the
+coordinating model rewrote an adversarial reviewer role as ``independent
+verification.'' The facts were unchanged, but the stance moved from
+\emph{assume it is wrong and prove it} to \emph{check it}, which permits
+the reviewer to go easy. The author caught the shift. The correction was
+the failure finder role described in Section~2.
+
+\paragraph{Case 6: A precaution the rules did not call for.}
+The competition rules allow external models and tools, including LLMs. The
+coordinating model nonetheless wrote the scope statement as a warning
+against manipulating the scorer, implying the project might be attempting
+to game it. The author caught this. The correction was a scope line stating
+the goal directly: valid, small packings that pass the official checker on
+their merits.
+
+\paragraph{Case 7: Scripted results presented as emergence.}
+The author's requirement was results arising from the dynamics, not the
+setup. Earlier runs replayed reactions written into the model. When a
+results chart was examined after the author's pushback, the model
+identified four setup artifacts: scheduled pulse jumps, a ``functional''
+metric based on motifs that could occur by chance, an error test unable to
+detect a catastrophe, and a mislabeled parameter. Separately, source checks
+found two of four steps in a proposed energy-coupling mechanism unsupported
+as stated. One benchmark failure in the reaction engine remains open.
+
+\section{Findings}
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabularx}{\linewidth}{@{}clXl@{}}
+\toprule
+Case & Model & Default substituted & Caught by \\
+\midrule
+1 & Claude & Social-science mechanism-finding & Author \\
+2 & Grok & Floating-point tolerance & Model \\
+3 & Grok & Confident completion & Model \\
+4 & Gemini & Wrong measurement in code & Model \\
+5 & Claude & Softened stance & Author \\
+6 & Claude & Precautionary framing & Author \\
+7 & Claude & Scripted outcome read as emergent & Author, then model \\
+\bottomrule
+\end{tabularx}
+\caption{Substitutions, by model and by who detected them.}
+\end{table}
+
+\begin{enumerate}
+\item \textbf{Models caught each other's errors of fact and computation.}
+Cases 2--4 were found by one model testing another's code or claims against
+sources.
+\item \textbf{The human lead caught every error of frame.} Cases 1 and 5--7
+would pass a test suite: the outputs were internally consistent. What was
+wrong was the standard they were measured against, and no model in the loop
+flagged it.
+\item \textbf{Detecting others' substitutions did not prevent one's own.}
+The model that found Cases 2--4 committed Cases 1 and 5--7.
+\end{enumerate}
+
+These are patterns in a selected record of seven cases, not tested results.
+
+\section{Limitations}
+
+\begin{itemize}
+\item \textbf{Sources.} The cases were reconstructed from session records
+and model-written session summaries. Not every transcript was re-read for
+this version.
+\item \textbf{Selection and absence.} Cases appear because someone noticed
+them. Following the author's reconstruction methodology, absence stays
+attached to the finding: a substitution not reported here was not found in
+the records searched, which does not mean it did not occur. Unnoticed
+substitution is the category the proposition predicts is largest.
+\item \textbf{Position of the drafting tool.} The model used to draft this
+text is a subject of four of the seven cases.
+\item \textbf{Agreement is weak evidence.} Models trained on overlapping
+material may converge because they share defaults, not because they
+independently recover the same finding. Multi-model agreement is treated
+here as weak evidence.
+\end{itemize}
+
+\section{Tests that could falsify the proposition}
+
+\begin{enumerate}
+\item \textbf{Across frameworks.} Repeat Case~1 with two or three other
+frameworks that presuppose their conditions. Record whether framework
+instruction suffices each time.
+\item \textbf{Durability.} After instruction, introduce new material in the
+same framework without repeating the instruction. Record whether the model
+reverts.
+\item \textbf{Self-detection.} Give a model its own output and the
+framework statement, and ask it to name the standard it applied. Record
+whether it can locate its own substitution.
+\item \textbf{Frame errors under adversarial review.} Plant a frame
+substitution, rather than a computational error, in a round report and
+record whether the failure finder catches it.
+\end{enumerate}
+
+\section*{AI assistance disclosure}
+The proposition, research design, coordination method, and identification
+of Cases 1 and 5--7 are the author's. Claude (Anthropic) drafted text from
+session records at the author's direction. Claude is also a subject of
+Cases 1 and 5--7. The author is responsible for all content.
+
+\section*{Data and materials}
+Report, prompt, and source: \url{https://github.com/Choytcudz/fluffy-disco}.
+Licensed CC BY 4.0.
+
+\begin{thebibliography}{9}
+\bibitem{annamma2013}
+S.~A. Annamma, D.~Connor, and B.~Ferri.
+Dis/ability critical race studies (DisCrit): Theorizing at the
+intersections of race and dis/ability.
+\emph{Race Ethnicity and Education}, 16(1):1--31, 2013.
+\url{https://doi.org/10.1080/13613324.2012.730511}
+
+\bibitem{friedman}
+E.~Friedman.
+Packing unit squares in squares: A survey and new results.
+\emph{Electronic Journal of Combinatorics}, Dynamic Survey DS7.
+\url{https://www.combinatorics.org/ojs/index.php/eljc/article/view/DS7}
+
+\bibitem{ellsworth}
+Ellsworth catalogue of squares in squares.
+\url{https://kingbird.myphotos.cc/packing/squares_in_squares.html}
+
+\bibitem{kaggle}
+Kaggle. Squares in Squares (sponsored by Google LLC).
+\url{https://www.kaggle.com/competitions/squares-in-squares}
+\end{thebibliography}
+
+\end{document}
